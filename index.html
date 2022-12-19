@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da velha</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div id="game"> 
+      <div class="row">
+        <div class="col" data-checked="false"></div>
+        <div class="col" data-checked="false"></div>
+        <div class="col" data-checked="false"></div>
+      </div>
+
+      <div class="row">
+        <div class="col" data-checked="false"></div>
+        <div class="col" data-checked="false"></div>
+        <div class="col" data-checked="false"></div>
+      </div>
+
+      <div class="row">
+        <div class="col" data-checked="false"></div>
+        <div class="col" data-checked="false"></div>
+        <div class="col" data-checked="false"></div>
+      </div>
+    </div>
+
+    <aside id="aside-configs">
+      <div id="info-text">
+        <label>Vez do jogador <span id="info-player"></span></label>
+      </div>
+      <button id="btn-reset-game" type="button" class="btn">Reiniciar</button>
+    </aside>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h1 class="text-center">Partida finalizada</h1>
+          <h2 id="player-win-modal" class="text-center"></h2>
+        </div>
+
+        <div class="modal-footer">
+          <button id="btn-reset-game-modal" type="button" title="reset game" class="btn" type="button">
+            Reiniciar game
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="speed-alert" data-type="success"></div>
+    <script type="text/javascript" src="./script.js"></script>
+  </body>
+</html>
