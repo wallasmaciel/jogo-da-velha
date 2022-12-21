@@ -90,6 +90,7 @@ function drawSelectItem(col) {
   col.setAttribute("data-player-checked", jogadorVez.value);
 };
 
+/*
 function checkedWin() { 
   let win = false;
   // Analisando a vitoria na horizontal 
@@ -185,6 +186,72 @@ function checkedWin() {
   // Caso a vitoria tenha sido garantida na diagonal não é necessário mais análises
   if (win) return true;
 };
+*/
+
+function checkedWin() {
+  // A quantidade máxima de pontos para declaração de vitória é a quantidade de elementos por linha 
+  const maxPts = elementPerRow; 
+  let win = false;
+
+  function horizontal(irow, icol, tempPts = 0) {
+    if (irow >= rows.length || irow < 0 || icol >= elementPerRow || icol < 0 || tempPts == maxPts) return tempPts;
+    if (
+      rows[irow].children[icol].hasAttribute("data-checked") && 
+      rows[irow].children[icol].getAttribute("data-checked") == "true" && 
+      rows[irow].children[icol].hasAttribute("data-player-checked") && 
+      rows[irow].children[icol].getAttribute("data-player-checked") == jogadorVez.value
+    ) 
+      return horizontal(irow, ++icol, ++tempPts);
+  }
+
+  function vertical(irow, icol, tempPts = 0) {
+    if (irow >= rows.length || irow < 0 || icol >= elementPerRow || icol < 0 || tempPts == maxPts) return tempPts;
+    if (
+      rows[irow].children[icol].hasAttribute("data-checked") && 
+      rows[irow].children[icol].getAttribute("data-checked") == "true" && 
+      rows[irow].children[icol].hasAttribute("data-player-checked") && 
+      rows[irow].children[icol].getAttribute("data-player-checked") == jogadorVez.value
+    ) 
+      return vertical(++irow, icol, ++tempPts);
+  }
+
+  function diagonalRight(irow, icol, tempPts = 0) {
+    if (irow >= rows.length || irow < 0 || icol >= elementPerRow || icol < 0 || tempPts == maxPts) return tempPts;
+    if (
+      rows[irow].children[icol].hasAttribute("data-checked") && 
+      rows[irow].children[icol].getAttribute("data-checked") == "true" && 
+      rows[irow].children[icol].hasAttribute("data-player-checked") && 
+      rows[irow].children[icol].getAttribute("data-player-checked") == jogadorVez.value
+    ) 
+      return diagonalRight(++irow, ++icol, ++tempPts);
+  }
+
+  function diagonalLeft(irow, icol, tempPts = 0) {
+    if (irow >= rows.length || irow < 0 || icol >= elementPerRow || icol < 0 || tempPts == maxPts) return tempPts;
+    if (
+      rows[irow].children[icol].hasAttribute("data-checked") && 
+      rows[irow].children[icol].getAttribute("data-checked") == "true" && 
+      rows[irow].children[icol].hasAttribute("data-player-checked") && 
+      rows[irow].children[icol].getAttribute("data-player-checked") == jogadorVez.value
+    ) 
+      return diagonalLeft(++irow, --icol, ++tempPts);
+  }
+
+  for (let i = 0; i < rows.length && !win; i++) {
+    for (let j = 0; j < rows[i].children.length && !win; j++) {
+      if (
+        rows[i].children[j].hasAttribute("data-checked") && 
+        rows[i].children[j].getAttribute("data-checked") == "true" && 
+        rows[i].children[j].hasAttribute("data-player-checked") && 
+        rows[i].children[j].getAttribute("data-player-checked") == jogadorVez.value
+      ) 
+        win = horizontal(i, j) == maxPts || vertical(i, j) == maxPts || 
+          diagonalRight(i, j) == maxPts || diagonalLeft(i, j) == maxPts;
+    }
+  }
+
+  return win;
+}
 
 function resetGame(e) {
   modal.classList.remove("show");
